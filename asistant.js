@@ -2,7 +2,7 @@ if (annyang) {
   var voices;
 
   var utter = new SpeechSynthesisUtterance();
-
+  annyang.setLanguage("es-PE");
   utter.rate = 1;
   utter.pitch = 0.5;
   utter.lang = "es-PE";
@@ -10,28 +10,39 @@ if (annyang) {
   window.speechSynthesis.onvoiceschanged = function () {
     voices = window.speechSynthesis.getVoices();
   };
-
   var commands = {
     "hola mariana": function () {
-      utter.text = "Hola Renato";
+      utter.text = "Hola. Cómo te llamas?";
       utter.voice = voices[7];
       window.speechSynthesis.speak(utter);
     },
-    "Quien eres": function () {
+    "Me llamo :name": function (name) {
+      utter.text = `Hola ${name}. En que te puedo ayudar.`;
+      utter.voice = voices[7];
+      window.speechSynthesis.speak(utter);
+    },
+    "Que eres": function () {
       utter.text =
         "Soy un asistente virtual diseñado para facilitarte el trabajo. Fui creada por ti.";
       utter.voice = voices[7];
       window.speechSynthesis.speak(utter);
     },
-    "Quien es dani": function () {
+    Como: function () {
       utter.text =
         "Danixsa es novia de mi creador Renatto. Es extremadamente bella y una mamasita. Hoy van a reunirse.";
       utter.voice = voices[7];
       window.speechSynthesis.speak(utter);
     },
   };
-
   annyang.addCommands(commands);
 
-  annyang.start({ autoRestart: false, continuous: true });
+  annyang.addCallback("resultNoMatch", function (undefinedTask) {
+    alert("Lo siento no puedo entenderte. Repite nuevamente");
+  });
+
+  annyang.addCallback("error", function () {
+    alert("There was an error");
+  });
+
+  annyang.start({ autoRestart: true, continuous: true });
 }
