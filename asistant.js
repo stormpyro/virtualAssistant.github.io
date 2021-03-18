@@ -27,12 +27,6 @@ if (annyang) {
       utter.voice = voices[7];
       window.speechSynthesis.speak(utter);
     },
-    Como: function () {
-      utter.text =
-        "Danixsa es novia de mi creador Renatto. Es extremadamente bella y una mamasita. Hoy van a reunirse.";
-      utter.voice = voices[7];
-      window.speechSynthesis.speak(utter);
-    },
   };
   annyang.addCommands(commands);
 
